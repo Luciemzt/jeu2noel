@@ -7,8 +7,8 @@ class Player {
     this.x = this.canvas.width/2;
     this.size= 150;
     this.y = this.canvas.height- this.size;
-    this.speed = 5;
-    this.lives = 3; 
+    this.speed = 7;
+    this.lives = 10; 
     this.score = 0;
     this.playerImage = new Image();
     this.direction = 0;

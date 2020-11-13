@@ -29,7 +29,7 @@ class Gift {
     this.ctx = this.canvas.getContext("2d");
     this.x = x;
     this.y = 0;
-    this.speed = 4;
+    this.speed = 5;
     this.direction = 1;
     this.giftImage = new Image();
   }

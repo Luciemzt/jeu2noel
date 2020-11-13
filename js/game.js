@@ -13,9 +13,8 @@ class Game {
   }
   startLoop() {
     this.player = new Player(this.canvas);
-
     const loop = () => {
-      if (Math.random() > 0.994) {
+      if (Math.random() > 0.99) {
         const x = Math.random() * this.canvas.width;
         this.snowFlakes.push(new SnowFlake(this.canvas, x));
       }
@@ -27,34 +26,28 @@ class Game {
       this.clearCanvas();
       this.updateCanvas();
       this.drawCanvas();
-      //console.log(this.player.lives, "player", this.player.x, this.player.y);
-      if (!this.isGameOver) {
-        window.requestAnimationFrame(loop);
-      }
-      if (!this.isGameWon) {
+      if (!this.isGameOver && !this.isGameWon) {
         window.requestAnimationFrame(loop);
       }
     };
     window.requestAnimationFrame(loop);
   }
   drawScore() {
-    let imgLives = new Image();
-    imgLives.src = "./img/score.png";
-    this.ctx.drawImage(imgLives, 10, 2, 20, 20);
-    this.ctx.font = "bold 20px Arial";
+    let imgScore = new Image();
+    imgScore.src = "./img/score.png";
+    this.ctx.drawImage(imgScore, 10, 2, 20, 20);
+    this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
     this.ctx.fillText(`${this.player.score}`, 40, 20);
-    this.ctx.fill;
   }
   drawLives() {
     let imgLives = new Image();
     imgLives.src = "./img/coeur.jpg";
     this.ctx.drawImage(imgLives, 10, 25, 20, 20);
-    this.ctx.font = "bold 20px Arial";
+    this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
     this.ctx.fillText(`${this.player.lives}`, 40, 40);
   }
-
   updateCanvas() {
     this.player.update();
     this.snowFlakes.forEach((snowFlake) => {
@@ -64,11 +57,9 @@ class Game {
       gift.move();
     });
   }
-
   clearCanvas() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
-
   drawCanvas() {
     this.player.drawPlayer();
     this.drawLives();
@@ -82,32 +73,42 @@ class Game {
   }
   checkCollisionWithSnowFlakes(snowFlake) {
     const snowFlakeBottomBorder = snowFlake.y + 80;
-    const snowFlakeLeft = snowFlake.x
-    const snowFlakeRight = snowFlake.x + 80
-    const santaTopBorder = this.player.y - this.player.size / 2
-    const santaLeftBorder = this.player.x - this.player.size / 2
-    const santaRightBorder = this.player.x + this.player.size / 2
-    const collisionLeft =  santaLeftBorder < snowFlakeRight
-    const collisionRight = santaRightBorder > snowFlakeLeft
-    const collisionTopBorder = santaTopBorder < snowFlakeBottomBorder
-   const collisionBottom = snowFlakeBottomBorder > santaTopBorder
-    if (collisionLeft && collisionRight && collisionTopBorder && collisionBottom) {
+    const snowFlakeLeft = snowFlake.x;
+    const snowFlakeRight = snowFlake.x + 80;
+    const santaTopBorder = this.player.y - this.player.size / 2;
+    const santaLeftBorder = this.player.x - this.player.size / 2;
+    const santaRightBorder = this.player.x + this.player.size / 2;
+    const collisionLeft = santaLeftBorder < snowFlakeRight;
+    const collisionRight = santaRightBorder > snowFlakeLeft;
+    const collisionTopBorder = santaTopBorder < snowFlakeBottomBorder;
+    const collisionBottom = snowFlakeBottomBorder > santaTopBorder;
+    if (
+      collisionLeft &&
+      collisionRight &&
+      collisionTopBorder &&
+      collisionBottom
+    ) {
       return true;
     }
     return false;
   }
   checkCollisionWithGift(gift) {
     const giftBottomBorder = gift.y + 80;
-    const giftLeft = gift.x
-    const giftRight = gift.x + 80
-    const santaTopBorder = this.player.y - this.player.size / 2
-    const santaLeftBorder = this.player.x - this.player.size / 2
-    const santaRightBorder = this.player.x + this.player.size / 2
-    const collisionLeft =  santaLeftBorder < giftRight
-    const collisionRight = santaRightBorder > giftLeft
-    const collisionTopBorder = santaTopBorder < giftBottomBorder
-    const collisionBottom = giftBottomBorder > santaTopBorder
-    if (collisionLeft && collisionRight && collisionTopBorder && collisionBottom) {
+    const giftLeft = gift.x;
+    const giftRight = gift.x + 80;
+    const santaTopBorder = this.player.y - this.player.size / 2;
+    const santaLeftBorder = this.player.x - this.player.size / 2;
+    const santaRightBorder = this.player.x + this.player.size / 2;
+    const collisionLeft = santaLeftBorder < giftRight;
+    const collisionRight = santaRightBorder > giftLeft;
+    const collisionTopBorder = santaTopBorder < giftBottomBorder;
+    const collisionBottom = giftBottomBorder > santaTopBorder;
+    if (
+      collisionLeft &&
+      collisionRight &&
+      collisionTopBorder &&
+      collisionBottom
+    ) {
       return true;
     }
     return false;
@@ -136,7 +137,6 @@ class Game {
         }
       }
     });
-
   }
   gameOverCallback(callback) {
     this.onGameOver = callback;
